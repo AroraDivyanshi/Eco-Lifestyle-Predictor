@@ -11,6 +11,7 @@ Run from the project root:   uvicorn backend.app:app --reload
 Interactive docs:            http://127.0.0.1:8000/docs
 """
 
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -29,13 +30,23 @@ app = FastAPI(title="Eco Lifestyle Predictor API",
 
 # Minimal CORS: only local development origins may call the API from a browser, and only with GET and POST.
 # (Add your frontend's address here if it runs on a different port.)
-app.add_middleware(CORSMiddleware,
-                   allow_origins=["http://localhost:5500", "http://127.0.0.1:5500",     # VS Code Live Server
-                                  "http://localhost:3000", "http://127.0.0.1:3000",
-                                  "http://localhost:5173", "http://127.0.0.1:5173"],
-                   allow_methods=["GET", "POST"],
-                   allow_headers=["Content-Type"])
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:5500,http://127.0.0.1:5500,"
+        "http://localhost:3000,http://127.0.0.1:3000,"
+        "http://localhost:5173,http://127.0.0.1:5173"
+    ).split(",")
+    if origin.strip()
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"]
+)
 
 @app.get("/health", response_model=HealthResponse)
 def health():
