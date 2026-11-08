@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eco Lifestyle Predictor</title>
+  <meta name="description" content="Eco Lifestyle Predictor: predict a lifestyle sustainability rating category and get personalised, rule-based suggestions.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6f54'/%3E%3Cpath d='M20 46c-2-14 8-24 26-26 2 16-8 28-22 28' fill='%23c8e38a'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="sr-only" href="#assess">Skip to the assessment</a>
+
+  <!-- Shown only when the backend cannot be reached -->
+  <div class="banner" id="offline-banner" hidden>
+    <div class="container">
+      <span id="offline-text">The backend is not reachable.</span>
+      <button type="button" class="btn btn-small btn-soft" id="retry-health">Check again</button>
+    </div>
+  </div>
+
+  <!-- ============ Sticky navigation ============ -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Eco Lifestyle Predictor, home">
+        <span class="brand-mark" data-icon="leaf"></span><span class="brand-text">Eco Lifestyle Predictor</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" data-nav="home"><span data-icon="home"></span><span class="label">Home</span></a></li>
+        <li><a href="#analytics" data-nav="analytics"><span data-icon="chart"></span><span class="label">Analytics</span></a></li>
+        <li><a href="#assess" data-nav="assess"><span data-icon="clipboard"></span><span class="label">Assessment</span></a></li>
+        <li><a href="#results" data-nav="results"><span data-icon="sparkles"></span><span class="label">Results</span></a></li>
+        <li><a href="#insights" data-nav="insights"><span data-icon="cpu"></span><span class="label">ML Insights</span></a></li>
+        <li><a href="#about" data-nav="about"><span data-icon="book"></span><span class="label">Methodology</span></a></li>
+      </ul>
+      <div class="nav-actions">
+        <span class="api-pill" id="api-pill" title="Backend status"><span class="dot"></span><span class="text" id="api-pill-text">Checking backend...</span></span>
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span data-icon="menu"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ A. Home ============ -->
+    <div id="home" data-section>
+      <section class="hero">
+        <div class="blob b1"></div><div class="blob b2"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Sustainable living, explained by data</span>
+            <h1>Eco Lifestyle Predictor</h1>
+            <p class="lead">Answer 17 questions about how you live. A machine-learning model predicts your lifestyle's sustainability rating category, and a separate rule-based engine suggests practical next steps.</p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#assess"><span data-icon="clipboard"></span> Start the assessment</a>
+              <a class="btn btn-outline" href="#analytics"><span data-icon="chart"></span> Explore the data</a>
+            </div>
+            <div class="hero-chips">
+              <span class="chip"><span data-icon="list"></span>17 lifestyle questions</span>
+              <span class="chip"><span data-icon="cpu"></span>Machine-learning classifier</span>
+              <span class="chip"><span data-icon="sprout"></span>12 suggestion rules</span>
+            </div>
+          </div>
+          <div class="hero-art" id="hero-art"></div>
+        </div>
+      </section>
+
+      <section class="bg-paper" style="padding-bottom:96px">
+        <div class="container stats reveal">
+          <div class="stats-grid">
+            <div class="stat-card tone-peach"><div class="stat-icon" data-icon="database"></div><div class="stat-value" id="stat-records">&ndash;</div><div class="stat-label">Records</div><div class="stat-sub">participants in the dataset</div></div>
+            <div class="stat-card tone-lavender"><div class="stat-icon" data-icon="list"></div><div class="stat-value" id="stat-features">&ndash;</div><div class="stat-label">Lifestyle features</div><div class="stat-sub">used as model inputs</div></div>
+            <div class="stat-card tone-sun"><div class="stat-icon" data-icon="cpu"></div><div class="stat-value" id="stat-models">&ndash;</div><div class="stat-label">Models compared</div><div class="stat-sub" id="stat-models-sub">plus a baseline</div></div>
+            <div class="stat-card tone-sage"><div class="stat-icon" data-icon="target"></div><div class="stat-value" id="stat-classes">&ndash;</div><div class="stat-label">Prediction categories</div><div class="stat-sub">Low, Medium, High</div></div>
+          </div>
+        </div>
+
+        <div class="container" style="margin-top:88px">
+          <div class="section-head center reveal">
+            <span class="eyebrow">What we look at</span>
+            <h2>Eight sides of everyday life</h2>
+            <p>The assessment covers the lifestyle dimensions in the dataset, from how you travel to how you handle waste.</p>
+          </div>
+          <div class="dimension-grid">
+            <div class="dimension-card tone-peach reveal"><span class="emoji" aria-hidden="true">🚲</span><div class="tile" data-icon="bike"></div><h3>Transport</h3><p>How you get around: car, public transit, bike or on foot.</p></div>
+            <div class="dimension-card tone-sun reveal"><span class="emoji" aria-hidden="true">☀️</span><div class="tile" data-icon="sun"></div><h3>Home energy</h3><p>Your energy source, plus electricity and home size.</p></div>
+            <div class="dimension-card tone-lavender reveal"><span class="emoji" aria-hidden="true">♻️</span><div class="tile" data-icon="recycle"></div><h3>Waste</h3><p>Landfill, recycling, composting, or a combination.</p></div>
+            <div class="dimension-card tone-sage reveal"><span class="emoji" aria-hidden="true">🛍️</span><div class="tile" data-icon="bag"></div><h3>Plastic use</h3><p>How often plastic products are part of your day.</p></div>
+            <div class="dimension-card tone-lavender reveal"><span class="emoji" aria-hidden="true">🥗</span><div class="tile" data-icon="utensils"></div><h3>Food choices</h3><p>Diet type and how often you buy local food.</p></div>
+            <div class="dimension-card tone-peach reveal"><span class="emoji" aria-hidden="true">👕</span><div class="tile" data-icon="shirt"></div><h3>Shopping</h3><p>Clothing habits and a preference for sustainable brands.</p></div>
+            <div class="dimension-card tone-sage reveal"><span class="emoji" aria-hidden="true">💧</span><div class="tile" data-icon="droplet"></div><h3>Water use</h3><p>Your monthly water consumption.</p></div>
+            <div class="dimension-card tone-sun reveal"><span class="emoji" aria-hidden="true">🤝</span><div class="tile" data-icon="users"></div><h3>Community</h3><p>Awareness, community involvement and activity level.</p></div>
+          </div>
+          <div class="steps">
+            <div class="step reveal"><div class="step-number">1</div><div><h3>Answer 17 questions</h3><p>Four short groups of questions, with real dataset ranges as hints.</p></div></div>
+            <div class="step reveal"><div class="step-number">2</div><div><h3>Get a predicted category</h3><p>The classifier predicts Low, Medium or High with uncalibrated probabilities.</p></div></div>
+            <div class="step reveal"><div class="step-number">3</div><div><h3>Receive tailored ideas</h3><p>Prioritised suggestions based on what you actually answered.</p></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ B. Data analytics ============ -->
+    <section class="section bg-ivory" id="analytics" data-section data-wave-next="#eaf2e5">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Data analytics</span>
+          <h2>What the dataset shows</h2>
+          <p>Every chart below is calculated by the backend from the dataset file. They describe patterns in this sample, not cause and effect.</p>
+        </div>
+        <div class="grid-12">
+          <div class="card span-7 reveal"><div class="card-head"><div><h3>Rating distribution</h3><p class="card-sub">How many participants gave each rating (1 to 5).</p></div></div><div class="chart-area" id="chart-rating"></div>
+            <div class="legend"><span><i style="background:#e5775a"></i>1-2 Low</span><span><i style="background:#f4cb4d"></i>3 Medium</span><span><i style="background:#4f9a70"></i>4-5 High</span></div></div>
+          <div class="card span-5 reveal"><div class="card-head"><div><h3>Target classes</h3><p class="card-sub">Ratings grouped into Low, Medium and High.</p></div></div><div class="chart-area" id="chart-class"></div></div>
+
+          <div class="card span-7 reveal"><div class="card-head"><div><h3 id="lifestyle-title">Transportation mode vs rating class</h3><p class="card-sub">Pick a lifestyle feature to see how the rating classes split inside each option.</p></div></div>
+            <div class="pill-row" id="pills-lifestyle"></div><div class="chart-area" id="chart-lifestyle"></div></div>
+          <div class="card span-5 reveal"><div class="card-head"><div><h3>Energy source</h3><p class="card-sub">Main household energy source.</p></div></div><div class="chart-area" id="chart-energy"></div></div>
+
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Diet patterns</h3><p class="card-sub">Rating classes within each diet type.</p></div></div><div class="chart-area" id="chart-diet"></div></div>
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Waste-disposal patterns</h3><p class="card-sub">Rating classes within each disposal method.</p></div></div><div class="chart-area" id="chart-disposal"></div></div>
+
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Electricity consumption</h3><p class="card-sub">kWh per month. Dashed lines: dataset median and 75th percentile (also used by the recommendation rules).</p></div></div><div class="chart-area" id="chart-electricity"></div></div>
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Water consumption</h3><p class="card-sub">Litres per month, with the same dataset median and 75th percentile.</p></div></div><div class="chart-area" id="chart-water"></div></div>
+
+          <div class="card span-7 reveal"><div class="card-head"><div><h3>Correlation heatmap</h3><p class="card-sub">Pearson correlation between the numerical features and the rating.</p></div></div><div class="chart-area" id="chart-corr"></div>
+            <div class="legend"><span><i style="background:#e5775a"></i>Negative</span><span><i style="background:#fbf7ee;border:1px solid #e7e0cf"></i>About zero</span><span><i style="background:#2f6f54"></i>Positive</span></div></div>
+          <div class="card span-5 reveal"><div class="card-head"><div><h3>Observations</h3><p class="card-sub">Written from the numbers above.</p></div></div><div id="obs-list"></div></div>
+
+          <div class="card span-12 reveal"><div class="card-head"><div><h3>Data quality check</h3><p class="card-sub">Repeated lifestyle profiles (identical 17 answers) are kept in the data, but they matter when judging model scores.</p></div></div><div class="quality-strip" id="quality-strip"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ C. Lifestyle assessment ============ -->
+    <section class="section bg-sage" id="assess" data-section data-wave-next="#fffdf8">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Lifestyle assessment</span>
+          <h2>Tell us about your lifestyle</h2>
+          <p>Seventeen quick questions in four groups. Nothing is stored; your answers are sent to your local backend only to produce the result.</p>
+          <div class="pill-row" style="margin-top:18px;align-items:center"><span class="card-sub" style="margin:0 6px 0 0">Just exploring? Try an example:</span><span id="example-buttons" style="display:contents"></span></div>
+        </div>
+        <form id="assessment-form" class="form-layout" novalidate>
+          <div class="form-progress"><span class="progress-text" id="progress-text">0 of 17 answered</span>
+            <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="17" aria-valuenow="0" aria-label="Questions answered"><div class="progress-fill" id="progress-fill"></div></div></div>
+          <div class="category-grid" id="category-grid"></div>
+          <div class="alert alert-error" id="form-alert" role="alert" hidden></div>
+          <div class="form-actions">
+            <p>Your answers are checked here and again by the backend. The prediction describes the dataset's rating category and is not a carbon calculation.</p>
+            <div class="buttons"><button type="button" class="btn btn-outline" id="reset-form">Clear answers</button><button type="submit" class="btn btn-primary" id="submit-button"><span data-icon="sparkles"></span> Get my prediction</button></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ D. Results ============ -->
+    <section class="section bg-paper" id="results" data-section data-wave-next="#f6f2fd">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Prediction &amp; personalised results</span>
+          <h2>Your results</h2>
+          <p>The predicted category comes from the machine-learning model. The suggestions come from separate rules that read your actual answers.</p>
+        </div>
+        <div id="results-box" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ E. ML insights ============ -->
+    <section class="section bg-lavender" id="insights" data-section data-wave-next="#fff0e5">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">ML insights</span>
+          <h2>How well does the model work?</h2>
+          <p>Genuine evaluation results saved when the model was trained. Test metrics belong to the model trained on 80% of the data and evaluated once on the other 20%.</p>
+        </div>
+        <div class="model-banner reveal" id="model-banner"></div>
+        <div id="metric-tiles" class="reveal" style="margin-bottom:22px"></div>
+        <div class="grid-12">
+          <div class="card span-7 reveal"><div class="card-head"><div><h3>Model comparison</h3><p class="card-sub" id="cv-note"></p></div></div><div id="chart-cv"></div></div>
+          <div class="card span-5 reveal"><div class="card-head"><div><h3>Confusion matrix</h3><p class="card-sub">Predictions vs reality on the test set.</p></div>
+            <div class="toggle-group" role="group" aria-label="Matrix display"><button type="button" class="active" data-matrix-mode="counts">Counts first</button><button type="button" data-matrix-mode="percent">Percent first</button></div></div><div id="chart-confusion"></div></div>
+          <div class="card span-7 reveal"><div class="card-head"><div><h3>Feature importance</h3></div>
+            <div class="toggle-group" role="group" aria-label="Importance view"><button type="button" class="active" data-importance-mode="model">Model-based</button><button type="button" data-importance-mode="permutation">Permutation</button><button type="button" data-importance-mode="encoded">Top 10 one-hot</button></div></div><div id="chart-importance"></div></div>
+          <div class="card span-5 reveal"><div class="card-head"><div><h3>Classification report</h3><p class="card-sub">Per-class results on the test set.</p></div></div><div id="report-table"></div></div>
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Supplementary: Linear Regression</h3><p class="card-sub">Predicting the numeric 1-5 rating. A separate experiment, not comparable with the classifier.</p></div></div><div id="regression-box"></div></div>
+          <div class="card span-6 reveal"><div class="card-head"><div><h3>Read these results carefully</h3></div></div><div id="insight-notes"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ F. Methodology ============ -->
+    <section class="section bg-peach" id="about" data-section data-wave-next="#12301f">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Methodology &amp; about</span>
+          <h2>How it works, step by step</h2>
+          <p>A second-year B.Tech AIML internship project that connects a scikit-learn model and a rule-based engine to this website through a FastAPI backend.</p>
+        </div>
+
+        <div class="workflow reveal" id="workflow">
+          <div class="flow-node"><span class="num">1</span><div class="tile" data-icon="database"></div><h4>Dataset</h4><p><span data-bind="rows">the</span> records with <span data-bind="features">17</span> lifestyle features and a 1-5 rating.</p></div>
+          <div class="flow-node"><span class="num">2</span><div class="tile" data-icon="filter"></div><h4>Target &amp; split</h4><p>Rating becomes Low / Medium / High. One stratified 80:20 split.</p></div>
+          <div class="flow-node"><span class="num">3</span><div class="tile" data-icon="layers"></div><h4>Preprocessing</h4><p>Impute, scale numbers, one-hot encode categories, fitted on training data only.</p></div>
+          <div class="flow-node"><span class="num">4</span><div class="tile" data-icon="scale"></div><h4>Compare models</h4><p>Baseline, Logistic Regression, Decision Tree and Random Forest with 5-fold CV.</p></div>
+          <div class="flow-node"><span class="num">5</span><div class="tile" data-icon="sliders"></div><h4>Tune</h4><p>GridSearchCV on the strongest model, using training data only.</p></div>
+          <div class="flow-node"><span class="num">6</span><div class="tile" data-icon="target"></div><h4>Evaluate once</h4><p>Scored on the untouched test set (<span data-bind="test_rows">20%</span> of the rows).</p></div>
+          <div class="flow-node"><span class="num">7</span><div class="tile" data-icon="shield"></div><h4>Refit &amp; save</h4><p>The pipeline is refitted on all rows and saved for the API.</p></div>
+          <div class="flow-node"><span class="num">8</span><div class="tile" data-icon="code"></div><h4>FastAPI</h4><p>Endpoints for prediction, analytics and model insights.</p></div>
+          <div class="flow-node"><span class="num">9</span><div class="tile" data-icon="sprout"></div><h4>Rule engine</h4><p>12 hand-written rules turn your answers into prioritised suggestions. Separate from the model.</p></div>
+          <div class="flow-node"><span class="num">10</span><div class="tile" data-icon="eye"></div><h4>This website</h4><p>Shows real results from the endpoints. No sample numbers.</p></div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card reveal"><div class="tile" data-icon="database"></div><h3>Dataset</h3><p>Each record has 17 lifestyle answers plus a 1-5 rating. <code>ParticipantID</code> and <code>Gender</code> are not model inputs. The text "None" in community involvement and physical activity is a real category. How the data was collected is unknown, so results are described as patterns in this sample.</p></div>
+          <div class="about-card reveal"><div class="tile" data-icon="layers"></div><h3>Preprocessing</h3><ul><li>5 numeric features: median imputation and standard scaling.</li><li>12 categorical features: most-frequent imputation and one-hot encoding.</li><li>Everything is inside one scikit-learn Pipeline fitted on training data only, so no test information leaks in.</li></ul></div>
+          <div class="about-card reveal"><div class="tile" data-icon="cpu"></div><h3>Machine-learning algorithms</h3><ul><li>A dummy baseline, Logistic Regression, Decision Tree and Random Forest are compared.</li><li>Models are ranked by macro F1 because the classes are imbalanced.</li><li>A separate Linear Regression experiment predicts the numeric rating.</li></ul></div>
+          <div class="about-card reveal"><div class="tile" data-icon="sprout"></div><h3>Recommendation engine</h3><p>Twelve rules cover transport, energy, waste, plastic, electricity, water, diet, local food, clothing, brands, community and awareness. Each suggestion has a priority and shows the answer that triggered it. Habits you already follow earn positive feedback, and electricity and water are compared with this dataset's median and 75th percentile, not with universal standards.</p></div>
+          <div class="about-card reveal"><div class="tile" data-icon="shield"></div><h3>Honest evaluation</h3><ul><li>Class probabilities are uncalibrated vote shares.</li><li>Some profiles repeat in the data, which can make scores look better than for new people.</li><li>The notebook also reports a group-aware cross-validation check.</li></ul></div>
+          <div class="about-card reveal"><div class="tile" data-icon="code"></div><h3>Technology</h3><p>Python, pandas and scikit-learn for the model; FastAPI and Pydantic for the backend; plain HTML, CSS and JavaScript for this website, with charts drawn as SVG by the page itself.</p></div>
+        </div>
+
+        <div class="alert alert-info limits reveal">
+          <span data-icon="info"></span>
+          <div><strong>What this project is not.</strong> It does not calculate carbon emissions or any real environmental impact. The rating is a label from the dataset, associations in the data are not causes, and suggestions are general ideas that do not guarantee a higher rating or a measurable improvement.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="#home"><span class="brand-mark" data-icon="leaf"></span><span>Eco Lifestyle Predictor</span></a>
+          <p>Predictions describe a dataset's rating category, not real-world emissions.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#analytics">Analytics</a><a href="#assess">Assessment</a><a href="#results">Results</a><a href="#insights">ML Insights</a><a href="#about">Methodology</a>
+        </nav>
+      </div>
+      <div class="footer-base">API: <span id="footer-api"></span></div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/insights.js"></script>
+  <script src="js/assessment.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

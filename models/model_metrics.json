@@ -1,0 +1,433 @@
+{
+  "created_at_utc": "2026-11-07T04:57:09+00:00",
+  "library_versions": {
+    "python": "3.12.3",
+    "scikit_learn": "1.9.1",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4"
+  },
+  "data": {
+    "rows": 499,
+    "feature_count": 17,
+    "feature_names": [
+      "Age",
+      "Location",
+      "DietType",
+      "LocalFoodFrequency",
+      "TransportationMode",
+      "EnergySource",
+      "HomeType",
+      "HomeSize",
+      "ClothingFrequency",
+      "SustainableBrands",
+      "EnvironmentalAwareness",
+      "CommunityInvolvement",
+      "MonthlyElectricityConsumption",
+      "MonthlyWaterConsumption",
+      "UsingPlasticProducts",
+      "DisposalMethods",
+      "PhysicalActivities"
+    ],
+    "class_counts": {
+      "Low": 131,
+      "Medium": 101,
+      "High": 267
+    },
+    "target_mapping": "Rating 1-2 = Low, 3 = Medium, 4-5 = High",
+    "excluded_columns": [
+      "ParticipantID",
+      "Gender",
+      "Rating"
+    ]
+  },
+  "split": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "stratified": true,
+    "train_rows": 399,
+    "test_rows": 100
+  },
+  "cross_validation": {
+    "folds": 5,
+    "data": "training split only",
+    "results": {
+      "Dummy (most frequent)": {
+        "accuracy": {
+          "mean": 0.5338291139240505,
+          "std": 0.004962808321067967
+        },
+        "precision_macro": {
+          "mean": 0.17794303797468353,
+          "std": 0.001654269440355991
+        },
+        "recall_macro": {
+          "mean": 0.3333333333333333,
+          "std": 0.0
+        },
+        "f1_macro": {
+          "mean": 0.23202002945378322,
+          "std": 0.0014104460939357148
+        }
+      },
+      "Logistic Regression": {
+        "accuracy": {
+          "mean": 0.8018354430379748,
+          "std": 0.060627212940117844
+        },
+        "precision_macro": {
+          "mean": 0.7666370618478517,
+          "std": 0.0711011100776968
+        },
+        "recall_macro": {
+          "mean": 0.7648899094521531,
+          "std": 0.07108911819276706
+        },
+        "f1_macro": {
+          "mean": 0.7633480569677864,
+          "std": 0.07038043322975349
+        }
+      },
+      "Decision Tree": {
+        "accuracy": {
+          "mean": 0.749367088607595,
+          "std": 0.039548733321340936
+        },
+        "precision_macro": {
+          "mean": 0.7213609743852457,
+          "std": 0.047833427481549486
+        },
+        "recall_macro": {
+          "mean": 0.7180541984235554,
+          "std": 0.06088262961659754
+        },
+        "f1_macro": {
+          "mean": 0.7103708600004197,
+          "std": 0.05348775875136213
+        }
+      },
+      "Random Forest": {
+        "accuracy": {
+          "mean": 0.831867088607595,
+          "std": 0.05662183931195965
+        },
+        "precision_macro": {
+          "mean": 0.8632899094363099,
+          "std": 0.03664459704916457
+        },
+        "recall_macro": {
+          "mean": 0.7649954943217596,
+          "std": 0.0854606628336461
+        },
+        "f1_macro": {
+          "mean": 0.7909876647009859,
+          "std": 0.07782697373619084
+        }
+      }
+    }
+  },
+  "selected_model": {
+    "name": "Random Forest",
+    "best_params": {
+      "model__max_depth": null,
+      "model__min_samples_leaf": 1,
+      "model__min_samples_split": 2,
+      "model__n_estimators": 300
+    },
+    "best_cv_macro_f1": 0.8063954859777578
+  },
+  "evaluation_model": {
+    "description": "The selected pipeline trained on the 80% training split. ALL metrics, the confusion matrix and the feature importance in this file describe THIS model, evaluated once on the 20% test set.",
+    "test_metrics": {
+      "accuracy": 0.82,
+      "macro_precision": 0.8845315904139434,
+      "macro_recall": 0.759449192782526,
+      "macro_f1": 0.8010870518102919
+    },
+    "dummy_baseline_test": {
+      "accuracy": 0.54,
+      "macro_precision": 0.18000000000000002,
+      "macro_recall": 0.3333333333333333,
+      "macro_f1": 0.23376623376623376
+    },
+    "classification_report": {
+      "Low": {
+        "precision": 0.8888888888888888,
+        "recall": 0.6153846153846154,
+        "f1-score": 0.7272727272727273,
+        "support": 26.0
+      },
+      "Medium": {
+        "precision": 1.0,
+        "recall": 0.7,
+        "f1-score": 0.8235294117647058,
+        "support": 20.0
+      },
+      "High": {
+        "precision": 0.7647058823529411,
+        "recall": 0.9629629629629629,
+        "f1-score": 0.8524590163934426,
+        "support": 54.0
+      },
+      "accuracy": 0.82,
+      "macro avg": {
+        "precision": 0.8845315904139434,
+        "recall": 0.7594491927825261,
+        "f1-score": 0.8010870518102919,
+        "support": 100.0
+      },
+      "weighted avg": {
+        "precision": 0.8440522875816993,
+        "recall": 0.82,
+        "f1-score": 0.8141246602963093,
+        "support": 100.0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "matrix": [
+        [
+          16,
+          0,
+          10
+        ],
+        [
+          0,
+          14,
+          6
+        ],
+        [
+          2,
+          0,
+          52
+        ]
+      ],
+      "note": "Rows = actual class, columns = predicted class."
+    },
+    "feature_importance": {
+      "model_based_per_feature": [
+        {
+          "feature": "MonthlyWaterConsumption",
+          "importance_share": 0.09458111751616619
+        },
+        {
+          "feature": "EnvironmentalAwareness",
+          "importance_share": 0.08709580632823234
+        },
+        {
+          "feature": "TransportationMode",
+          "importance_share": 0.08295181525555119
+        },
+        {
+          "feature": "MonthlyElectricityConsumption",
+          "importance_share": 0.08002593179463624
+        },
+        {
+          "feature": "EnergySource",
+          "importance_share": 0.0747771803064153
+        },
+        {
+          "feature": "DisposalMethods",
+          "importance_share": 0.07146583473471375
+        },
+        {
+          "feature": "CommunityInvolvement",
+          "importance_share": 0.06528727106438056
+        },
+        {
+          "feature": "DietType",
+          "importance_share": 0.061579574147164085
+        },
+        {
+          "feature": "PhysicalActivities",
+          "importance_share": 0.05894328389060639
+        },
+        {
+          "feature": "UsingPlasticProducts",
+          "importance_share": 0.05824368539144481
+        },
+        {
+          "feature": "LocalFoodFrequency",
+          "importance_share": 0.05176179342043913
+        },
+        {
+          "feature": "HomeSize",
+          "importance_share": 0.04850117026285945
+        },
+        {
+          "feature": "SustainableBrands",
+          "importance_share": 0.04659576016584337
+        },
+        {
+          "feature": "Age",
+          "importance_share": 0.038550287210716266
+        },
+        {
+          "feature": "ClothingFrequency",
+          "importance_share": 0.03604683950028258
+        },
+        {
+          "feature": "Location",
+          "importance_share": 0.02220797083098595
+        },
+        {
+          "feature": "HomeType",
+          "importance_share": 0.02138467817956246
+        }
+      ],
+      "model_based_top10_encoded": [
+        {
+          "feature": "MonthlyWaterConsumption",
+          "importance": 0.09458111751616619
+        },
+        {
+          "feature": "EnvironmentalAwareness",
+          "importance": 0.08709580632823234
+        },
+        {
+          "feature": "MonthlyElectricityConsumption",
+          "importance": 0.08002593179463624
+        },
+        {
+          "feature": "TransportationMode_Car",
+          "importance": 0.05258129430561742
+        },
+        {
+          "feature": "HomeSize",
+          "importance": 0.04850117026285945
+        },
+        {
+          "feature": "DisposalMethods_Landfill",
+          "importance": 0.04788746814923778
+        },
+        {
+          "feature": "Age",
+          "importance": 0.038550287210716266
+        },
+        {
+          "feature": "EnergySource_Non-Renewable",
+          "importance": 0.033416965805878614
+        },
+        {
+          "feature": "UsingPlasticProducts_Often",
+          "importance": 0.03086012150360602
+        },
+        {
+          "feature": "CommunityInvolvement_Low",
+          "importance": 0.027273243342453
+        }
+      ],
+      "permutation_on_test": [
+        {
+          "feature": "TransportationMode",
+          "mean_f1_drop": 0.043110697749664015,
+          "std": 0.015702288816033406
+        },
+        {
+          "feature": "CommunityInvolvement",
+          "mean_f1_drop": 0.037478556324319505,
+          "std": 0.018857582540373105
+        },
+        {
+          "feature": "DisposalMethods",
+          "mean_f1_drop": 0.022852911233539424,
+          "std": 0.013796131284218902
+        },
+        {
+          "feature": "SustainableBrands",
+          "mean_f1_drop": 0.022149739671781726,
+          "std": 0.013534773465781321
+        },
+        {
+          "feature": "DietType",
+          "mean_f1_drop": 0.021865450791811805,
+          "std": 0.018085971320711772
+        },
+        {
+          "feature": "PhysicalActivities",
+          "mean_f1_drop": 0.019429079647748596,
+          "std": 0.01429352233021274
+        },
+        {
+          "feature": "EnvironmentalAwareness",
+          "mean_f1_drop": 0.018876091622992263,
+          "std": 0.014849171690800704
+        },
+        {
+          "feature": "HomeType",
+          "mean_f1_drop": 0.01817162539448416,
+          "std": 0.014317775604146004
+        },
+        {
+          "feature": "MonthlyElectricityConsumption",
+          "mean_f1_drop": 0.013680421320757493,
+          "std": 0.014609057167817342
+        },
+        {
+          "feature": "ClothingFrequency",
+          "mean_f1_drop": 0.012230845535964466,
+          "std": 0.011561727664336025
+        },
+        {
+          "feature": "EnergySource",
+          "mean_f1_drop": 0.011577903939258652,
+          "std": 0.009468361830841604
+        },
+        {
+          "feature": "MonthlyWaterConsumption",
+          "mean_f1_drop": 0.010230082385873526,
+          "std": 0.011386603811358413
+        },
+        {
+          "feature": "UsingPlasticProducts",
+          "mean_f1_drop": 0.007424391810647032,
+          "std": 0.009963423398762541
+        },
+        {
+          "feature": "LocalFoodFrequency",
+          "mean_f1_drop": 0.001902021849648509,
+          "std": 0.009135763135348002
+        },
+        {
+          "feature": "Location",
+          "mean_f1_drop": -0.0021945236090162414,
+          "std": 0.00513030336633348
+        },
+        {
+          "feature": "Age",
+          "mean_f1_drop": -0.005102925261891951,
+          "std": 0.00583541828890108
+        },
+        {
+          "feature": "HomeSize",
+          "mean_f1_drop": -0.006810105441846699,
+          "std": 0.00828563236858556
+        }
+      ],
+      "notes": "Importance shows what the model relies on, not what causes a rating. Several features carry overlapping information, so rankings in the middle are not stable."
+    }
+  },
+  "supplementary_regression": {
+    "linear_regression_test": {
+      "rmse": 0.9609135053233983,
+      "mae": 0.7252945874298625,
+      "r2": 0.5357926877920163
+    },
+    "mean_predictor_baseline_test": {
+      "rmse": 1.4112036865298172,
+      "mae": 1.2363157894736843,
+      "r2": -0.0012044868912302054
+    },
+    "note": "Supplementary experiment on the numeric Rating (1-5). Regression metrics are NOT comparable with the classification accuracy/F1."
+  },
+  "deployment_model": {
+    "file": "models/eco_model.joblib",
+    "trained_on_rows": 499,
+    "description": "Same pipeline and settings, refitted on all labelled rows. It has NO held-out test metrics (every row was used for training); the test metrics above belong to the evaluation model.",
+    "probabilities_calibrated": false,
+    "probability_note": "Probabilities are the Random Forest's vote shares. They are UNCALIBRATED: a value of 0.8 does not mean an 80% chance of being right."
+  }
+}
